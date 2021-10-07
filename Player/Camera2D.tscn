@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Player/CameraMovement.gd" type="Script" id=1]
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2( -48, -32 )
+offset = Vector2( 53.144, 43.745 )
+current = true
+process_mode = 0
+smoothing_enabled = true
+script = ExtResource( 1 )

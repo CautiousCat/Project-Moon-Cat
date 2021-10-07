@@ -1,0 +1,152 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Sprites/Cat.png" type="Texture" id=1]
+[ext_resource path="res://Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Player/FloorDetection.gd" type="Script" id=3]
+[ext_resource path="res://Player/RightWall.gd" type="Script" id=11]
+[ext_resource path="res://Player/LeftWall.gd" type="Script" id=12]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 12.125, 10.2908 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12.125, 1.09994 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 0.798059, 9.43861 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 0.814175, 9.36626 )
+
+[sub_resource type="Animation" id=9]
+resource_name = "FALL"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 10 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "IDLE"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "JUMP"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 9 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "WALK"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 3, 4, 5, 6, 7, 8 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "WALLCLING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 11 ]
+}
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+collision_mask = 2
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 6.23181 )
+shape = SubResource( 1 )
+
+[node name="Overlaps" type="Node2D" parent="."]
+
+[node name="Floor" type="Area2D" parent="Overlaps"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Overlaps/Floor"]
+position = Vector2( 0, 16 )
+shape = SubResource( 2 )
+
+[node name="LeftWall" type="Area2D" parent="Overlaps"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Overlaps/LeftWall"]
+position = Vector2( -11.9258, 5.35143 )
+shape = SubResource( 4 )
+
+[node name="RightWall" type="Area2D" parent="Overlaps"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Overlaps/RightWall"]
+position = Vector2( 11.8566, 5.35143 )
+shape = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 0.625 )
+texture = ExtResource( 1 )
+vframes = 12
+frame = 11
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_process_mode = 0
+anims/FALL = SubResource( 9 )
+anims/IDLE = SubResource( 6 )
+anims/JUMP = SubResource( 8 )
+anims/WALK = SubResource( 7 )
+anims/WALLCLING = SubResource( 10 )
